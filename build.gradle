@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'application'
+    
+}
+sourceCompatibility= 1.8  //컴파일할 때 적용할 java code의jdkversion 지정
+
+//인코딩지정
+tasks.withType(JavaCompile) {
+	options.encoding= 'UTF-8'
+}
+
+repositories {
+    jcenter()
+}
+
+javadoc {
+	options.encoding = 'UTF-8'
+}
+
+dependencies {
+	// https://mvnrepository.com/artifact/mysql/mysql-connector-java
+	implementation group: 'mysql', name: 'mysql-connector-java', version: '5.1.49'
+	// https://mvnrepository.com/artifact/com.toedter/jcalendar
+	implementation group: 'com.toedter', name: 'jcalendar', version: '1.4'
+	
+    testImplementation 'junit:junit:4.13'
+    
+}
+jar {
+	// archiveName'StudentManagement.jar' archiveName속성을지정하면baseName속성이나appendix속성은무시.
+	version = 1.0
+	// application으로 개발 할 경우(apply plugin: 'application') main()메서드가 있는 클래스를 반드시 지정
+	mainClassName= 'swing_study.SwingMain'
+	baseName= 'SwingMain'
+	appendix = 'bin'
+	manifest{
+	attributes 'Title': baseName, 'Version': version, 'Main-Class': mainClassName
+}
+	dependsOn configurations.runtime// 실행 가능한jar 파일설정
+}
