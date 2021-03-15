@@ -3,9 +3,9 @@ package erp.dto;
 public class Title {
 	private int tNo;
 	private String tName;
-	
+
 	public Title() {
-		
+		// TODO Auto-generated constructor stub
 	}
 
 	public Title(int tNo) {
@@ -33,9 +33,32 @@ public class Title {
 		this.tName = tName;
 	}
 
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + tNo;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Title other = (Title) obj;
+		if (tNo != other.tNo)
+			return false;
+		return true;
+	}
+
 	@Override
 	public String toString() {
-		return String.format("직책 번호 = %s, 직책 이름 = %s", tNo, tName);
+		return String.format("%s(%d)", tName, tNo);
 	}
-	
+
 }

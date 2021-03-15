@@ -12,34 +12,31 @@ import erp.databases.JdbcConn;
 import erp.dto.Department;
 
 public class DepartmentDaoImpl implements DepartmentDao {
-	
 	private static final DepartmentDaoImpl instance = new DepartmentDaoImpl();
-
+	
 	public static DepartmentDaoImpl getInstance() {
-		
 		return instance;
 	}
-	
+
 	private DepartmentDaoImpl() {
-		
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public List<Department> selectDepartmentByAll() {
-		String sql = "select deptNo,deptName,floor from department";
+		String sql = "select deptNo, deptName, floor from department";
 		try(Connection con = JdbcConn.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()){
-			if(rs.next()) {
+			if (rs.next()) {
 				List<Department> list = new ArrayList<>();
 				do {
 					list.add(getDepartment(rs));
 				}while(rs.next());
+//				System.out.println(list.size());
 				return list;
 			}
-			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -47,38 +44,36 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
 	private Department getDepartment(ResultSet rs) throws SQLException {
 		int deptNo = rs.getInt("deptno");
-		String deptName = rs.getString("deptname");
+		String deptName = rs.getString("deptName");
 		int floor = rs.getInt("floor");
-		
-		return new Department(deptNo,deptName,floor);
+		return new Department(deptNo, deptName, floor);
 	}
 
 	@Override
-	public Department selectDepartmentBydeptNo(Department dept) {
-		String sql = "select deptNo,deptName,floor from department where deptNo = ?";
+	public Department selectDepartmentByNo(Department department) {
+		String sql = "select deptNo, deptName, floor from department where deptNo = ?";
 		try(Connection con = JdbcConn.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
-			pstmt.setInt(1, dept.getDeptNo());
+			pstmt.setInt(1, department.getDeptNo());
 			try(ResultSet rs = pstmt.executeQuery()){
-				if(rs.next()) {
+				if (rs.next()) {
 					return getDepartment(rs);
 				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
 
 	@Override
-	public int insertDepartment(Department dept) {
-		String sql = "insert into department values(?,?,?)";
+	public int insertDepartment(Department department) {
+		String sql = "insert into department values(?, ?, ?)";
 		try(Connection con = JdbcConn.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
-			pstmt.setInt(1, dept.getDeptNo());
-			pstmt.setString(2, dept.getDeptName());
-			pstmt.setInt(3, dept.getFloor());
+			pstmt.setInt(1, department.getDeptNo());
+			pstmt.setString(2, department.getDeptName());
+			pstmt.setInt(3, department.getFloor());
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -87,15 +82,15 @@ public class DepartmentDaoImpl implements DepartmentDao {
 	}
 
 	@Override
-	public int updateDepartment(Department dept) {
-		String sql = "update department set deptName = ? where deptNo = ?";
+	public int updateDepartment(Department department) {
+		String sql = "update department set deptName = ?, floor = ? where deptNo = ?";
 		try(Connection con = JdbcConn.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
-			pstmt.setString(1, dept.getDeptName());
-			pstmt.setInt(2, dept.getDeptNo());
+			pstmt.setString(1, department.getDeptName());
+			pstmt.setInt(2, department.getFloor());
+			pstmt.setInt(3, department.getDeptNo());
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return 0;
@@ -103,17 +98,15 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
 	@Override
 	public int deleteDepartment(int deptNo) {
-		String sql = "delete from department where deptNo = ?";
+		String sql = "delete from department where deptno = ?";
 		try(Connection con = JdbcConn.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
-			pstmt.setInt(1, deptNo);;
+			pstmt.setInt(1, deptNo);
 			return pstmt.executeUpdate();
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return 0;
 	}
-
-
 
 }

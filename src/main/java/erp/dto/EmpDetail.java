@@ -3,24 +3,24 @@ package erp.dto;
 import java.util.Arrays;
 import java.util.Date;
 
-public class Emp_detail {
+public class EmpDetail {
 	private int empNo;
 	private boolean gender;
-	private Date hiredate;
+	private Date hireDate;
 	private byte[] pic;
-	
-	public Emp_detail() {
 
+	public EmpDetail() {
+		// TODO Auto-generated constructor stub
 	}
 
-	public Emp_detail(int empNo) {
+	public EmpDetail(int empNo) {
 		this.empNo = empNo;
 	}
 
-	public Emp_detail(int empNo, boolean gender, Date hiredate, byte[] pic) {
+	public EmpDetail(int empNo, boolean gender, Date hireDate, byte[] pic) {
 		this.empNo = empNo;
 		this.gender = gender;
-		this.hiredate = hiredate;
+		this.hireDate = hireDate;
 		this.pic = pic;
 	}
 
@@ -40,12 +40,12 @@ public class Emp_detail {
 		this.gender = gender;
 	}
 
-	public Date getHiredate() {
-		return hiredate;
+	public Date getHireDate() {
+		return hireDate;
 	}
 
-	public void setHiredate(Date hiredate) {
-		this.hiredate = hiredate;
+	public void setHireDate(Date hireDate) {
+		this.hireDate = hireDate;
 	}
 
 	public byte[] getPic() {
@@ -58,8 +58,8 @@ public class Emp_detail {
 
 	@Override
 	public String toString() {
-		return String.format("Emp_detail [empNo=%s, gender=%s, hiredate=%s, pic=%s]", empNo, gender, hiredate,
+		return String.format("EmpDetail [empNo=%s, gender=%s, hireDate=%s, pic=%s]", empNo, gender, hireDate,
 				Arrays.toString(pic));
 	}
-	
+
 }

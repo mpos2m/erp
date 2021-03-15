@@ -1,73 +1,77 @@
 package erp.ui.content;
 
-import java.awt.Component;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import erp.dto.Title;
 import erp.ui.exception.InvalidCheckException;
 
 @SuppressWarnings("serial")
-public class TitlePanel extends JPanel {
-	private JTextField tfTitleName;
-	private JTextField tfTitleNo;
-
+public class TitlePanel extends InterfaceItem<Title>{
+	private JTextField tfNo;
+	private JTextField tfName;
 
 	public TitlePanel() {
-
 		initialize();
 	}
-	private void initialize() {
-		setAlignmentY(Component.TOP_ALIGNMENT);
-		setBorder(new TitledBorder(new EmptyBorder(20, 20, 20, 20), "직책정보", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		setLayout(new GridLayout(0, 2, 10, 20));
+	@Override
+	public void initialize() {
+		setBorder(new TitledBorder(null, "직책정보", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		setLayout(new GridLayout(0, 2, 10, 0));
 		
-			
+		JLabel lblNo = new JLabel("직책번호");
+		lblNo.setHorizontalAlignment(SwingConstants.RIGHT);
+		add(lblNo);
 		
-		JLabel lblTitleNo = new JLabel("직책 번호");
-		lblTitleNo.setHorizontalAlignment(SwingConstants.RIGHT);
-		add(lblTitleNo);
+		tfNo = new JTextField();
+		tfNo.setColumns(10);
+		add(tfNo);
 		
-		tfTitleNo = new JTextField();
-		add(tfTitleNo);
-		tfTitleNo.setColumns(10);
+		JLabel lblName = new JLabel("직책명");
+		lblName.setHorizontalAlignment(SwingConstants.RIGHT);
+		add(lblName);
 		
-		JLabel lblTitleName = new JLabel("직책 이름");
-		lblTitleName.setHorizontalAlignment(SwingConstants.RIGHT);
-		add(lblTitleName);
-		
-		tfTitleName = new JTextField();
-		add(tfTitleName);
-		tfTitleName.setColumns(10);	
+		tfName = new JTextField();
+		tfName.setColumns(10);
+		add(tfName);
 	}
 	
-	public void setTitle(Title title) {
-		tfTitleName.setText(title.gettName());
-		tfTitleNo.setText(title.gettNo()+"");
+	@Override
+	public void clearTf() {
+		tfNo.setText("");
+		tfName.setText("");
 		
-		tfTitleNo.setEditable(false);
+		if (!tfNo.isEditable()) {
+			tfNo.setEditable(true);
+		}
 	}
 
-	public Title getTitle() {
-		validCheck();
-		String titleName = tfTitleName.getText().trim();
-		int titleNo = Integer.parseInt(tfTitleNo.getText().trim());
-		return new Title(titleNo,titleName);
-	}
-	private void validCheck() {
-		 if(tfTitleNo.getText().contentEquals("") || tfTitleName.getText().equals("")) {
-			 throw new InvalidCheckException();
-		 }
+	@Override
+	public void setItem(Title item) {
+		tfNo.setText(String.valueOf(item.gettNo()));
+		tfName.setText(item.gettName());
+		
+		tfNo.setEditable(false);
 		
 	}
-	public void clearTf() {
-		tfTitleName.setText("");
-		tfTitleNo.setText("");
+
+	@Override
+	public Title getItem() {
+		validCheck();
+		int tNo = Integer.parseInt(tfNo.getText().trim());
+		String tName = tfName.getText().trim();
+		return new Title(tNo, tName);
+	}
+
+	@Override
+	public void validCheck() {
+		if (tfNo.getText().contentEquals("") || tfName.getText().equals("")) {
+			throw new InvalidCheckException();
+		}
+		
 	}
 }

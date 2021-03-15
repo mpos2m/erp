@@ -1,5 +1,6 @@
 package erp.ui.exception;
 
+@SuppressWarnings("serial")
 public class DataSameException extends RuntimeException {
 
 	public DataSameException() {

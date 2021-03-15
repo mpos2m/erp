@@ -1,24 +1,15 @@
 package erp.dto;
 
 public class Department {
-
 	private int deptNo;
 	private String deptName;
 	private int floor;
-	
-//	private List<Employee> emplist;
-	
-	
-	public Department() {
-		
-	}
-	
-	
-	public Department(int deptNo, String deptName) {
-		this.deptNo = deptNo;
-		this.deptName = deptName;
-	}
 
+//	private List<Employee> emplist;
+
+	public Department() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public Department(int deptNo) {
 		this.deptNo = deptNo;
@@ -55,10 +46,30 @@ public class Department {
 	}
 
 	@Override
-	public String toString() {
-		return String.format("Department [deptNo=%s, deptName=%s, floor=%s]", deptNo, deptName, floor);
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + deptNo;
+		return result;
 	}
-	
-	
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Department other = (Department) obj;
+		if (deptNo != other.deptNo)
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("%s(%d)", deptName, deptNo);
+	}
 
 }

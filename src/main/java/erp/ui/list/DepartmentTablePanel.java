@@ -7,29 +7,33 @@ import erp.service.DepartmentService;
 
 @SuppressWarnings("serial")
 public class DepartmentTablePanel extends AbstractCustomTablePanel<Department> {
-	private DepartmentService service = new DepartmentService();
-	
+	private DepartmentService service;
+
 	@Override
 	public void initList() {
-		list = service.showDepartment();
+		list = service.showDeptList();
 	}
 
 	@Override
 	protected void setAlignAndWidth() {
-		setTableCellAlign(SwingConstants.CENTER, 0,1);
-		setTableCellWidth(100,250);
+		// 컬럼내용 정렬
+		setTableCellAlign(SwingConstants.CENTER, 0, 1, 2);
+		// 컬럼별 너비 조정
+		setTableCellWidth(100, 250, 100);
 	}
 
 	@Override
-	public Object[] toArray(Department d) {
-
-		return new Object[] {d.getDeptNo(), d.getDeptName(), d.getFloor()};
+	public Object[] toArray(Department t) {
+		return new Object[] { t.getDeptNo(), t.getDeptName(), t.getFloor() };
 	}
 
 	@Override
 	public String[] getColumnNames() {
-
-		return new String[] {"부서번호","부서이름","위치"};
+		return new String[] { "부서번호", "부서명", "위치" };
 	}
 
+
+	public void setService(DepartmentService service) {
+		this.service = service;
+	}
 }

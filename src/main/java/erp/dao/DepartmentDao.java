@@ -6,10 +6,9 @@ import erp.dto.Department;
 
 public interface DepartmentDao {
 	List<Department> selectDepartmentByAll();
-	Department selectDepartmentBydeptNo(Department dept);
+	Department selectDepartmentByNo(Department department);
 	
-	int insertDepartment(Department dept);
-	int updateDepartment(Department dept);
-	int deleteDepartment(int dept);
-	
+	int insertDepartment(Department department);
+	int updateDepartment(Department department);
+	int deleteDepartment(int deptNo);
 }
