@@ -86,6 +86,7 @@ public class Main extends JFrame implements ActionListener {
 	protected void actionPerformedBtnEmployee(ActionEvent e) {
 		EmployeeManagerUi frame = new EmployeeManagerUi();
 		frame.setTitle("사원 관리");
+		
 		frame.setVisible(true);
 	}
 }
