@@ -17,7 +17,7 @@ import javax.swing.border.EmptyBorder;
 import erp.dto.Employee;
 import erp.dto.Title;
 import erp.service.TitleService;
-import erp.ui.content.InterfaceItem;
+import erp.ui.content.AbstractConenPanel;
 import erp.ui.content.TitlePanel;
 import erp.ui.exception.InvalidCheckException;
 import erp.ui.exception.NotSelectedException;
@@ -29,7 +29,7 @@ public class TitleManager extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 	private JButton btnAdd;
-	private InterfaceItem<Title> pContent;
+	private AbstractConenPanel<Title> pContent;
 	private TitleTablePanel pList;
 	private TitleService service;
 	
