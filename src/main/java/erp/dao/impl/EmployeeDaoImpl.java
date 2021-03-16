@@ -86,7 +86,10 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public Employee selectEmployeeByNo(Employee employee) {
-		String sql = "select * from employee";
+		String sql = "select empno, empname, title as title_no, " +
+				     "       manager as manager_no, salary, dept as deptNo " + 
+				     "  from employee" +
+				     " where empno = ?";
 		try(Connection con = JdbcConn.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
 			pstmt.setInt(1, employee.getEmpNo());
@@ -115,7 +118,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			pstmt.setInt(6, employee.getDept().getDeptNo());
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
-			throw new SqlConstraintException(e.getMessage(),e);
+			throw new SqlConstraintException(e.getMessage(), e);
 		}
 	}
 

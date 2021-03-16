@@ -11,14 +11,14 @@ import erp.dto.Title;
 import erp.ui.exception.InvalidCheckException;
 
 @SuppressWarnings("serial")
-public class TitlePanel extends AbstractConentPanel<Title>{
+public class TitlePanel extends AbstractContentPanel<Title>{
 	private JTextField tfNo;
 	private JTextField tfName;
 
 	public TitlePanel() {
 		initialize();
 	}
-
+	
 	private void initialize() {
 		setBorder(new TitledBorder(null, "직책정보", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(new GridLayout(0, 2, 10, 0));
@@ -39,7 +39,7 @@ public class TitlePanel extends AbstractConentPanel<Title>{
 		tfName.setColumns(10);
 		add(tfName);
 	}
-	
+
 	@Override
 	public void clearTf() {
 		tfNo.setText("");
@@ -48,6 +48,7 @@ public class TitlePanel extends AbstractConentPanel<Title>{
 		if (!tfNo.isEditable()) {
 			tfNo.setEditable(true);
 		}
+		
 	}
 
 	@Override
@@ -55,8 +56,7 @@ public class TitlePanel extends AbstractConentPanel<Title>{
 		tfNo.setText(String.valueOf(item.gettNo()));
 		tfName.setText(item.gettName());
 		
-		tfNo.setEditable(false);
-		
+		tfNo.setEditable(false);		
 	}
 
 	@Override
@@ -71,7 +71,6 @@ public class TitlePanel extends AbstractConentPanel<Title>{
 	public void validCheck() {
 		if (tfNo.getText().contentEquals("") || tfName.getText().equals("")) {
 			throw new InvalidCheckException();
-		}
-		
+		}		
 	}
 }

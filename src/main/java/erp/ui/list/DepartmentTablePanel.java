@@ -32,7 +32,6 @@ public class DepartmentTablePanel extends AbstractCustomTablePanel<Department> {
 		return new String[] { "부서번호", "부서명", "위치" };
 	}
 
-
 	public void setService(DepartmentService service) {
 		this.service = service;
 	}

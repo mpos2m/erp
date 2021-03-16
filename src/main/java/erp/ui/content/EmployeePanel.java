@@ -25,8 +25,7 @@ import erp.service.EmployeeService;
 import erp.ui.exception.InvalidCheckException;
 
 @SuppressWarnings("serial")
-public class EmployeePanel extends AbstractConentPanel<Employee> implements ItemListener{
-	
+public class EmployeePanel extends AbstractContentPanel<Employee> implements ItemListener {
 	private JTextField tfNo;
 	private JTextField tfName;
 	private JComboBox<Title> cmbTitle;
@@ -54,7 +53,7 @@ public class EmployeePanel extends AbstractConentPanel<Employee> implements Item
 		cmbDept.setSelectedIndex(-1);
 		cmbTitle.setSelectedIndex(-1);
 	}
-	
+
 	private void initialize() {
 		setBorder(new TitledBorder(null, "사원 정보", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setLayout(new BorderLayout(0, 0));
@@ -147,7 +146,7 @@ public class EmployeePanel extends AbstractConentPanel<Employee> implements Item
 		cmbTitle.setSelectedItem(item.getTitle());
 		cmbDept.setSelectedItem(item.getDept());
 		cmbManager.setSelectedItem(item.getManager());
-		spinSalary.setValue(item.getSalary());
+		spinSalary.setValue(item.getSalary());		
 	}
 
 	@Override
@@ -169,6 +168,6 @@ public class EmployeePanel extends AbstractConentPanel<Employee> implements Item
 				|| cmbDept.getSelectedIndex() == -1
 				|| cmbManager.getSelectedIndex() == -1) {
 			throw new InvalidCheckException();
-		}
+		}		
 	}
 }

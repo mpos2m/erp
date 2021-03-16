@@ -11,13 +11,12 @@ import erp.dto.Department;
 import erp.ui.exception.InvalidCheckException;
 
 @SuppressWarnings("serial")
-public class DepartmentPanel extends AbstractConentPanel<Department>{
+public class DepartmentPanel extends AbstractContentPanel<Department>{
 	private JTextField tfDeptNo;
 	private JTextField tfDeptName;
 	private JTextField tfFloor;
 
 	public DepartmentPanel() {
-
 		initialize();
 	}
 	
@@ -49,8 +48,7 @@ public class DepartmentPanel extends AbstractConentPanel<Department>{
 		tfFloor.setColumns(10);
 		add(tfFloor);
 	}
-
-	@Override
+	
 	public void clearTf() {
 		tfDeptNo.setText("");
 		tfDeptName.setText("");
@@ -68,8 +66,7 @@ public class DepartmentPanel extends AbstractConentPanel<Department>{
 		tfDeptName.setText(item.getDeptName());
 		tfFloor.setText(item.getFloor() + "");
 		
-		tfDeptNo.setEditable(false);
-		
+		tfDeptNo.setEditable(false);		
 	}
 
 	@Override
@@ -88,7 +85,6 @@ public class DepartmentPanel extends AbstractConentPanel<Department>{
 				|| tfFloor.getText().equals("")) {
 			throw new InvalidCheckException();
 		}		
-		
 	}
 }
 
