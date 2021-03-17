@@ -4,13 +4,18 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 
+import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,6 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
@@ -28,6 +34,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.toedter.calendar.JDateChooser;
 
+import erp.dto.Employee;
 import erp.dto.EmployeeDetail;
 import erp.ui.exception.InvalidCheckException;
 
@@ -45,6 +52,8 @@ public class EmployeeDetailPanel extends AbstractContentPanel<EmployeeDetail> im
 	private JDateChooser dateHire;
 	private JRadioButton rdbtnFemale;
 	private JLabel lblPassConfirm;
+	private JTextField tfEmpNo;
+	private JRadioButton rdbtnMale;
 	
 	public EmployeeDetailPanel() {
 		initialize();
@@ -91,6 +100,15 @@ public class EmployeeDetailPanel extends AbstractContentPanel<EmployeeDetail> im
 		pItem.add(pContent);
 		pContent.setLayout(new GridLayout(0, 2, 10, 0));
 		
+		JLabel lblEmpNo = new JLabel("사원번호");
+		lblEmpNo.setHorizontalAlignment(SwingConstants.RIGHT);
+		pContent.add(lblEmpNo);
+		
+		tfEmpNo = new JTextField();
+		tfEmpNo.setEditable(false);
+		pContent.add(tfEmpNo);
+		tfEmpNo.setColumns(10);
+		
 		JLabel lblHireDate = new JLabel("입사일");
 		lblHireDate.setHorizontalAlignment(SwingConstants.RIGHT);
 		pContent.add(lblHireDate);
@@ -110,7 +128,7 @@ public class EmployeeDetailPanel extends AbstractContentPanel<EmployeeDetail> im
 		buttonGroup.add(rdbtnFemale);
 		pGender.add(rdbtnFemale);
 		
-		JRadioButton rdbtnMale = new JRadioButton("남");
+		rdbtnMale = new JRadioButton("남");
 		buttonGroup.add(rdbtnMale);
 		pGender.add(rdbtnMale);
 		
@@ -140,21 +158,59 @@ public class EmployeeDetailPanel extends AbstractContentPanel<EmployeeDetail> im
 		pContent.add(lblPassConfirm);
 	}
 
+	public void setTfEmpno(Employee empNo) {
+		tfEmpNo.setText(String.valueOf(empNo.getEmpNo()));
+	}
+	
 	@Override
 	public void setItem(EmployeeDetail item) {
-		// TODO Auto-generated method stub
+		tfEmpNo.setText(String.valueOf(item.getEmpNo()));
+		byte[] iconByte = item.getPic();
+		ImageIcon icon = new ImageIcon(iconByte);
+		lblPic.setIcon(icon);
+		dateHire.setDate(item.getHireDate());
+		if(item.isGender()) {
+			rdbtnFemale.setSelected(true);
+		}else {
+			rdbtnMale.setSelected(true);
+		}
 		
 	}
 
 	@Override
 	public EmployeeDetail getItem() {
-		// TODO Auto-generated method stub
+		validCheck();
+		int empNo = Integer.parseInt(tfEmpNo.getText().trim());
+		boolean gender = rdbtnFemale.isSelected()?true:false;
+		Date hireDate = dateHire.getDate();
+		String pass = String.valueOf(pfPass1.getPassword());
+		byte[] pic = getImage();
+ 		
+		return new EmployeeDetail(empNo, gender, hireDate, pass, pic);
+	}
+
+	private byte[] getImage() {
+		 
+		 try(ByteArrayOutputStream baos = new ByteArrayOutputStream()){
+			 ImageIcon icon = (ImageIcon) lblPic.getIcon();
+			 BufferedImage bi = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_RGB);
+			 
+			 // icon ->image
+			 Graphics2D g2 = bi.createGraphics();
+			 g2.drawImage(icon.getImage(), 0, 0, null);
+			 g2.dispose();
+			 
+			 ImageIO.write(bi, "png", baos);
+			 return baos.toByteArray();
+		 } catch (IOException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
 	public void validCheck() {
-		if (!lblPassConfirm.getText().equals("일치")) {
+		if (lblPassConfirm.getText().equals("불일치")) {
 			throw new InvalidCheckException("비밀번호 불일치");
 		}
 	}
@@ -215,4 +271,5 @@ public class EmployeeDetailPanel extends AbstractContentPanel<EmployeeDetail> im
 			}
 		}
 	};
+	
 }

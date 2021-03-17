@@ -18,3 +18,5 @@ insert into erp.emp_detail (empno, pic, gender, hiredate, pass) values (?, ?, ?,
 select * from emp_detail;
 
 select empno, pic, gender, hiredate, pass from emp_detail where empno = 1003; 
+
+select * from employee;
